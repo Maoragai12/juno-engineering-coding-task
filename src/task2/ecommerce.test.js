@@ -1,7 +1,21 @@
-import { fetchOrderById } from "../api";
+import { fetchAllOrders, bucketOrdersByUsers } from "../task2/ecommerce";
 
-const ORDER_ID = "70ef599e5eca171b2bce84d1"
-test("Ecommerce - fetchOrderById", async () => {
-    let orders = await fetchOrderById(ORDER_ID);
-    expect(orders).toBeTruthy();
+describe("Ecommerce - fetchAllOrders", () => {
+    test("should return all orders", async () => {
+        const orders = await fetchAllOrders();
+        expect(orders).toHaveLength(100);
+    });
+});
+
+describe("Ecommerce - bucketOrdersByUsers", () => {
+    test("should return all users", async () => {
+        const usersOrders = await bucketOrdersByUsers();
+        const usersIds = Object.keys(usersOrders);
+        expect(usersIds).toHaveLength(10);
+    });
+    test("should return users orders in array", async () => {
+        const usersOrders = await bucketOrdersByUsers();
+        const orders = Object.values(usersOrders);
+        expect(orders[0]).toBeInstanceOf(Array);
+    });
 });
